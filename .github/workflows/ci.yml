@@ -28,7 +28,8 @@ jobs:
             libxrandr-dev \
             libxxf86vm-dev \
             libxi-dev \
-            libxcursor-dev
+            libxcursor-dev \
+            libxinerama-dev
 
       - name: Build
         run: |
