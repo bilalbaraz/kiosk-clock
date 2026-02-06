@@ -10,5 +10,6 @@ func main() {
 	w := a.NewWindow("Hello World")
 
 	w.SetContent(widget.NewLabel("Hello World!"))
+	w.SetFullScreen(true)
 	w.ShowAndRun()
 }
