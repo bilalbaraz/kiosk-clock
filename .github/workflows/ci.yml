@@ -56,8 +56,14 @@ jobs:
 
       - name: Install Linux deps
         run: |
+          sudo dpkg --add-architecture arm64
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libgl1-mesa-dev xorg-dev gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+          sudo apt-get install -y --no-install-recommends \
+            libgl1-mesa-dev xorg-dev \
+            gcc-aarch64-linux-gnu libc6-dev-arm64-cross \
+            libgl1-mesa-dev:arm64 libx11-dev:arm64 libxrandr-dev:arm64 \
+            libxxf86vm-dev:arm64 libxi-dev:arm64 libxcursor-dev:arm64 \
+            libxinerama-dev:arm64
 
       - name: Build
         env:
