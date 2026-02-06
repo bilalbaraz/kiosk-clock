@@ -67,7 +67,7 @@ jobs:
         run: |
           mkdir -p dist/darwin_amd64
           go build -o dist/darwin_amd64/kiosk-watch .
-          fyne package -os darwin -icon kiosk-watch-icon.png
+          fyne package -os darwin -icon kiosk-watch-icon.png -name kiosk-watch
           (cd dist && zip -q -r kiosk-watch_darwin_app.zip ../kiosk-watch.app)
           (cd dist/darwin_amd64 && zip -q ../kiosk-watch_darwin_amd64.zip kiosk-watch)
 
