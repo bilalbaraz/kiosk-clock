@@ -37,16 +37,14 @@ jobs:
           path: dist/kiosk-watch*
 
   build-linux:
-    runs-on: ${{ matrix.runner }}
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     strategy:
       matrix:
         include:
-          - runner: ubuntu-latest
-            arch: amd64
-          - runner: ubuntu-24.04-arm64
-            arch: arm64
+          - arch: amd64
+          - arch: arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,13 +57,16 @@ jobs:
       - name: Install Linux deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libgl1-mesa-dev xorg-dev
+          sudo apt-get install -y --no-install-recommends libgl1-mesa-dev xorg-dev gcc-aarch64-linux-gnu
 
       - name: Build
         env:
           CGO_ENABLED: "1"
         run: |
           mkdir -p dist
+          if [ "${{ matrix.arch }}" = "arm64" ]; then
+            export CC=aarch64-linux-gnu-gcc
+          fi
           GOOS=linux GOARCH=${{ matrix.arch }} go build -o dist/linux_${{ matrix.arch }}/kiosk-watch .
           (cd dist/linux_${{ matrix.arch }} && zip -q ../kiosk-watch_linux_${{ matrix.arch }}.zip kiosk-watch)
 
