@@ -68,7 +68,8 @@ jobs:
           mkdir -p dist/darwin_amd64
           go build -o dist/darwin_amd64/kiosk-watch .
           fyne package -os darwin -icon kiosk-watch-icon.png -name kiosk-watch
-          (cd dist && zip -q -r kiosk-watch_darwin_app.zip ../kiosk-watch.app)
+          cp -R kiosk-watch.app dist/
+          (cd dist && zip -q -r kiosk-watch_darwin_app.zip kiosk-watch.app)
           (cd dist/darwin_amd64 && zip -q ../kiosk-watch_darwin_amd64.zip kiosk-watch)
 
       - name: Upload artifact
@@ -93,6 +94,9 @@ jobs:
         with:
           path: dist
           merge-multiple: true
+
+      - name: List dist contents
+        run: ls -al dist
 
       - name: Create release and upload assets
         uses: softprops/action-gh-release@v2
